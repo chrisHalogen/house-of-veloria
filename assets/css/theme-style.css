@@ -1,0 +1,2759 @@
+/* START: House of Veloria Scoped CSS */
+
+/* Reset body margins and padding to remove white border */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* This wrapper scopes all styles to prevent conflicts with Elementor */
+.house-of-veloria-container {
+  --velvet-rouge: #470108;
+  --warm-gold: #b4a06a;
+  --cream-linen: #f8f4e9;
+  --lagoon-slate: #3a5a8b;
+  --white: #ffffff;
+
+  --font-header: "Dancing Script", cursive;
+  --font-body: "Montserrat", sans-serif;
+
+  --header-height: 80px;
+
+  /* Base Styles */
+  font-family: var(--font-body);
+  color: var(--velvet-rouge);
+  background-color: var(--white);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Reset and Utilities */
+.house-of-veloria-container * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.house-of-veloria-container a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.house-of-veloria-container ul {
+  list-style: none;
+}
+
+.house-of-veloria-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.house-of-veloria-container .section-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.house-of-veloria-container .section-title {
+  font-family: var(--font-header);
+  font-size: 3rem;
+  color: var(--warm-gold);
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .section-subtitle {
+  text-align: center;
+  max-width: 600px;
+  margin: -1.5rem auto 2rem auto;
+  color: var(--velvet-rouge);
+  line-height: 1.6;
+}
+
+.house-of-veloria-container .cta-button {
+  display: inline-block;
+  background-color: var(--warm-gold);
+  color: var(--white);
+  padding: 12px 30px;
+  border: 2px solid var(--warm-gold);
+  border-radius: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .cta-button:hover {
+  background-color: transparent;
+  color: var(--warm-gold);
+}
+
+/* Homepage Product Card Button Override */
+.house-of-veloria-container .product-card .cta-button {
+    background-color: var(--velvet-rouge);
+    border-color: var(--velvet-rouge);
+    color: var(--white);
+}
+
+.house-of-veloria-container .product-card .cta-button:hover {
+    background-color: transparent;
+    color: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .sr-only {
+  /* For accessibility */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* --- Header & Navigation --- */
+.house-of-veloria-container .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #470108 !important; /* Velvet Rouge Hardcoded */
+  /* backdrop-filter: blur(10px); Remove blur to avoid looking washed out/ashy */
+  transition: background-color 0.3s ease;
+}
+
+.house-of-veloria-container .nav-container {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.house-of-veloria-container .logo {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  color: var(--warm-gold);
+  display: flex;
+  align-items: center;
+}
+
+.house-of-veloria-container .logo-text {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--warm-gold);
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .logo:hover .logo-text {
+  color: var(--cream-linen);
+  transform: scale(1.05);
+}
+
+.house-of-veloria-container .logo-img {
+  max-height: 60px;
+  width: auto;
+}
+
+.house-of-veloria-container .nav-menu {
+  display: none; /* Hidden on mobile */
+}
+
+.house-of-veloria-container .hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.house-of-veloria-container .hamburger-menu span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--white);
+  transition: all 0.3s ease;
+}
+
+/* Hamburger active state */
+.house-of-veloria-container
+  .header.nav-active
+  .hamburger-menu
+  span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.house-of-veloria-container
+  .header.nav-active
+  .hamburger-menu
+  span:nth-child(2) {
+  opacity: 0;
+}
+.house-of-veloria-container
+  .header.nav-active
+  .hamburger-menu
+  span:nth-child(3) {
+  transform: translateY(-12px) rotate(-45deg);
+}
+
+/* Mobile Nav Styles */
+.house-of-veloria-container .header.nav-active .nav-menu {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  background-color: var(--velvet-rouge);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.house-of-veloria-container .nav-links {
+  flex-direction: column;
+  text-align: center;
+  gap: 1.5rem;
+}
+.house-of-veloria-container .nav-link {
+  font-size: 1.5rem;
+  color: var(--white);
+  transition: color 0.3s ease;
+}
+.house-of-veloria-container .nav-link:hover {
+  color: var(--warm-gold);
+}
+.house-of-veloria-container .nav-socials {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.house-of-veloria-container .nav-socials a {
+  color: var(--white);
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+.houseof-veloria-container .nav-socials a:hover {
+  color: var(--warm-gold);
+}
+
+/* --- Hero Section --- */
+.house-of-veloria-container .hero-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  text-align: center;
+  padding: 0 20px;
+  /* Placeholder background */
+  background: url("https://hoveloria.com/wp-content/uploads/2025/11/hero.png")
+    no-repeat center center/cover;
+}
+
+.house-of-veloria-container .hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.house-of-veloria-container .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.house-of-veloria-container .hero-title {
+  font-family: var(--font-header);
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  color: var(--warm-gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.house-of-veloria-container .countdown-timer div {
+  text-align: center;
+}
+
+.house-of-veloria-container .countdown-timer span {
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: block;
+}
+
+.house-of-veloria-container .hero-section .cta-button:hover {
+  color: var(--white); /* Override for hero */
+}
+
+/* --- Sections General Styling --- */
+.house-of-veloria-container section:not(.hero-section) {
+  padding: 6rem 0;
+}
+
+/* --- Brand Story Section --- */
+.house-of-veloria-container .story-section {
+  background-color: var(--cream-linen);
+}
+.house-of-veloria-container .story-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  position: relative;
+}
+.house-of-veloria-container .story-content p {
+  margin-bottom: 1.5rem;
+}
+.house-of-veloria-container .story-content::before,
+.house-of-veloria-container .story-content::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 1px;
+  background-color: var(--warm-gold);
+}
+.house-of-veloria-container .story-content::before {
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.house-of-veloria-container .story-content::after {
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- Product Preview Gallery --- */
+.house-of-veloria-container .collection-section {
+  background-color: var(--white);
+}
+
+.house-of-veloria-container .gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.house-of-veloria-container .gallery-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: 8px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.house-of-veloria-container .gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.house-of-veloria-container .gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(98 98 98 / 60%);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.house-of-veloria-container .gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.house-of-veloria-container .gallery-overlay h3 {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.house-of-veloria-container .gallery-item:hover .gallery-overlay h3 {
+  transform: translateY(0);
+}
+
+/* --- Subscription & CTA Sections --- */
+.house-of-veloria-container .subscribe-section,
+.house-of-veloria-container .final-cta-section {
+  background-color: var(--cream-linen);
+  text-align: center;
+}
+
+.house-of-veloria-container .subscribe-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto 1rem auto;
+  gap: 1rem;
+}
+
+.house-of-veloria-container .subscribe-form input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background-color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.house-of-veloria-container .subscribe-form input:focus {
+  outline: none;
+  border-color: var(--warm-gold);
+}
+
+.house-of-veloria-container .subscribe-form .captcha-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.house-of-veloria-container .subscribe-form .captcha-group label {
+  font-weight: 600;
+  color: var(--velvet-rouge);
+  font-size: 0.95rem;
+}
+
+.house-of-veloria-container .subscribe-form .captcha-group input[type="number"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background-color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.house-of-veloria-container .subscribe-form .captcha-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--warm-gold);
+}
+
+.house-of-veloria-container .subscribe-form .cta-button.loading {
+  background-color: var(--lagoon-slate);
+  border-color: var(--lagoon-slate);
+  cursor: not-allowed;
+}
+
+.house-of-veloria-container .privacy-text {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.house-of-veloria-container .form-feedback {
+  min-height: 20px;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.house-of-veloria-container .form-feedback.success {
+  color: #46b450;
+}
+
+.house-of-veloria-container .form-feedback.error {
+  color: #dc3232;
+}
+.house-of-veloria-container .form-feedback.success {
+  color: #28a745;
+}
+.house-of-veloria-container .form-feedback.error {
+  color: #dc3545;
+}
+
+/* --- Social Proof / Testimonials --- */
+.house-of-veloria-container .testimonials-section {
+  background-color: var(--velvet-rouge);
+  color: var(--cream-linen);
+}
+.house-of-veloria-container .testimonials-section .section-title {
+  color: var(--warm-gold);
+}
+.house-of-veloria-container .testimonial-carousel {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  min-height: 250px;
+  text-align: center;
+}
+.house-of-veloria-container .testimonial-card {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.house-of-veloria-container .testimonial-card.active {
+  opacity: 1;
+  visibility: visible;
+}
+.house-of-veloria-container .quote-mark {
+  font-family: var(--font-header);
+  font-size: 5rem;
+  color: var(--warm-gold);
+  line-height: 1;
+}
+.house-of-veloria-container .testimonial-text {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.house-of-veloria-container .testimonial-author {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* --- Final CTA Section --- */
+.house-of-veloria-container .final-cta-section {
+  background-color: var(--velvet-rouge);
+  color: var(--white);
+}
+.house-of-veloria-container .urgency-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.house-of-veloria-container .final-socials {
+  margin-top: 3rem;
+}
+.house-of-veloria-container .final-socials h3 {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.house-of-veloria-container .final-socials .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.house-of-veloria-container .final-socials .social-links a {
+  font-size: 1.5rem;
+  color: var(--white);
+  transition: color 0.3s ease;
+}
+.house-of-veloria-container .final-socials .social-links a:hover {
+  color: var(--warm-gold);
+}
+
+/* --- Footer --- */
+.house-of-veloria-container .footer {
+  background-color: var(--velvet-rouge);
+  color: var(--cream-linen);
+  padding: 3rem 20px;
+  text-align: center;
+}
+.house-of-veloria-container .footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.house-of-veloria-container .footer-logo {
+  font-family: var(--font-header);
+  font-size: 1.8rem;
+  color: var(--warm-gold);
+  display: block;
+  margin-bottom: 1rem;
+}
+.house-of-veloria-container .contact-email,
+.house-of-veloria-container .copyright {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(248, 244, 233, 0.7);
+}
+.house-of-veloria-container .contact-email a {
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.house-of-veloria-container .contact-email a:hover {
+  color: var(--warm-gold);
+}
+
+/* --- Responsive Media Queries (Mobile First) --- */
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .house-of-veloria-container .hamburger-menu {
+    display: none;
+  }
+  .house-of-veloria-container .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .house-ofveloria-container .header.nav-active .nav-menu {
+    /* Reset mobile overlay styles */
+    position: static;
+    height: auto;
+    width: auto;
+    background-color: transparent;
+    flex-direction: row;
+  }
+  .house-of-veloria-container .nav-links {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .house-of-veloria-container .nav-link {
+    font-size: 1rem;
+    color: var(--white);
+    position: relative;
+  }
+  .house-of-veloria-container .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--warm-gold);
+    transition: width 0.3s ease;
+  }
+  .house-of-veloria-container .nav-link:hover::after {
+    width: 100%;
+  }
+  .house-of-veloria-container .nav-socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0;
+    border-left: 1px solid rgba(180, 160, 106, 0.3);
+    padding-left: 2rem;
+  }
+  .house-of-veloria-container .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .house-of-veloria-container .subscribe-form {
+    flex-direction: row;
+    gap: 0;
+  }
+  .house-of-veloria-container .subscribe-form input {
+    border-radius: 2px 0 0 2px;
+  }
+  .house-of-veloria-container .subscribe-form button {
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+/* ============================================================
+   PAGE-SPECIFIC STYLES
+   ============================================================ */
+
+/* --- Page Hero (Inner Pages) --- */
+.house-of-veloria-container .page-hero {
+  position: relative;
+  height: 25vh;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  text-align: center;
+  padding: 0 20px;
+  padding-top: var(--header-height);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.house-of-veloria-container .page-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(71, 1, 8, 0.7),
+    rgba(71, 1, 8, 0.85)
+  );
+}
+
+.house-of-veloria-container .page-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.house-of-veloria-container .page-hero-title {
+  font-family: var(--font-header);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .page-hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* --- Logo Image in Header --- */
+.house-of-veloria-container .logo-img {
+  height: 50px;
+  width: auto;
+}
+
+/* --- Featured Collections Grid --- */
+.house-of-veloria-container .collections-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .collection-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 4/5;
+}
+
+.house-of-veloria-container .collection-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.house-of-veloria-container .collection-card:hover img {
+  transform: scale(1.08);
+}
+
+.house-of-veloria-container .collection-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(71, 1, 8, 0.9), transparent);
+  color: var(--white);
+}
+
+.house-of-veloria-container .collection-card-title {
+  font-family: var(--font-header);
+  font-size: 1.8rem;
+  color: var(--warm-gold);
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .collection-card-count {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* --- Stats Section --- */
+.house-of-veloria-container .stats-section {
+  background-color: var(--velvet-rouge);
+  color: var(--white);
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.house-of-veloria-container .stat-item {
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .stat-number {
+  font-family: var(--font-header);
+  font-size: 3rem;
+  color: var(--warm-gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+/* --- Product Cards --- */
+.house-of-veloria-container .products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.house-of-veloria-container .product-card {
+  background: var(--white);
+  border: 1px solid var(--cream-linen);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.house-of-veloria-container .product-card:hover {
+  box-shadow: 0 10px 40px rgba(71, 1, 8, 0.15);
+}
+
+.house-of-veloria-container .product-card-image {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.house-of-veloria-container .product-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.house-of-veloria-container .product-card:hover .product-card-image img {
+  transform: scale(1.05);
+}
+
+.house-of-veloria-container .product-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--warm-gold);
+  color: var(--white);
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.house-of-veloria-container .product-card-info {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.house-of-veloria-container .product-card-title {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .product-card-price {
+  font-size: 1.1rem;
+  color: var(--warm-gold);
+  font-weight: 600;
+}
+
+/* --- Best Sellers Carousel --- */
+.house-of-veloria-container .carousel-section {
+  overflow: hidden;
+}
+
+.house-of-veloria-container .carousel-wrapper {
+  position: relative;
+}
+
+.house-of-veloria-container .carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.house-of-veloria-container .carousel-slide {
+  flex: 0 0 280px;
+}
+
+.house-of-veloria-container .carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .carousel-btn {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--warm-gold);
+  background: transparent;
+  color: var(--warm-gold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.house-of-veloria-container .carousel-btn:hover {
+  background: var(--warm-gold);
+  color: var(--white);
+}
+
+/* --- Trust Badges --- */
+.house-of-veloria-container .trust-badges {
+  background: var(--cream-linen);
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .trust-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  text-align: center;
+}
+
+.house-of-veloria-container .trust-item {
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .trust-icon {
+  font-size: 2.5rem;
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .trust-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .trust-text {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* --- Instagram Grid --- */
+.house-of-veloria-container .instagram-section {
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.house-of-veloria-container .instagram-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.house-of-veloria-container .instagram-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.house-of-veloria-container .instagram-item:hover img {
+  transform: scale(1.1);
+}
+
+.house-of-veloria-container .instagram-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(71, 1, 8, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.house-of-veloria-container .instagram-item:hover .instagram-overlay {
+  opacity: 1;
+}
+
+.house-of-veloria-container .instagram-overlay i {
+  color: var(--white);
+  font-size: 1.5rem;
+}
+
+/* --- Timeline (Curation Story) --- */
+.house-of-veloria-container .timeline-section {
+  padding: 5rem 0;
+  background: var(--white);
+}
+
+.house-of-veloria-container .timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 3rem auto 0;
+}
+
+.house-of-veloria-container .timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: var(--warm-gold);
+}
+
+.house-of-veloria-container .timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 50%;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.house-of-veloria-container .timeline-item:nth-child(even) {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 50%;
+}
+
+.house-of-veloria-container .timeline-content {
+  background: var(--cream-linen);
+  padding: 2rem;
+  max-width: 380px;
+  position: relative;
+  margin-right: 30px;
+}
+
+.house-of-veloria-container .timeline-item:nth-child(even) .timeline-content {
+  margin-right: 0;
+  margin-left: 30px;
+}
+
+.house-of-veloria-container .timeline-number {
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--warm-gold);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.house-of-veloria-container .timeline-item:nth-child(even) .timeline-number {
+  right: auto;
+  left: -60px;
+}
+
+.house-of-veloria-container .timeline-title {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  color: var(--warm-gold);
+  margin-bottom: 0.75rem;
+}
+
+.house-of-veloria-container .timeline-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--velvet-rouge);
+}
+
+/* --- Feature Grid (Veloria Standard) --- */
+.house-of-veloria-container .feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .feature-card {
+  background: var(--white);
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid var(--cream-linen);
+  transition: box-shadow 0.3s ease;
+}
+
+.house-of-veloria-container .feature-card:hover {
+  box-shadow: 0 10px 40px rgba(71, 1, 8, 0.1);
+}
+
+.house-of-veloria-container .feature-icon {
+  font-size: 3rem;
+  color: var(--warm-gold);
+  margin-bottom: 1.5rem;
+}
+
+.house-of-veloria-container .feature-title {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .feature-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #666;
+}
+
+/* --- Brand Values --- */
+.house-of-veloria-container .values-section {
+  background: var(--velvet-rouge);
+  color: var(--white);
+  padding: 5rem 0;
+}
+
+.house-of-veloria-container .values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .value-item {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .value-title {
+  font-family: var(--font-header);
+  font-size: 1.4rem;
+  color: var(--warm-gold);
+  margin-bottom: 0.75rem;
+}
+
+.house-of-veloria-container .value-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* --- Two Column Layout --- */
+.house-of-veloria-container .two-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.house-of-veloria-container .two-column-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.house-of-veloria-container .two-column-quote {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  color: var(--warm-gold);
+  line-height: 1.4;
+  position: relative;
+  padding-left: 2rem;
+  border-left: 3px solid var(--warm-gold);
+}
+
+/* --- Tabbed Content (Shopping Guide) --- */
+.house-of-veloria-container .guide-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .guide-sidebar {
+  background: var(--cream-linen);
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.house-of-veloria-container .sidebar-link {
+  padding: 1rem 1.25rem;
+  background: var(--white);
+  color: var(--velvet-rouge);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.house-of-veloria-container .sidebar-link:hover,
+.house-of-veloria-container .sidebar-link.active {
+  border-color: var(--warm-gold);
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .guide-content {
+  background: var(--white);
+}
+
+.house-of-veloria-container .tab-content {
+  display: none;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.house-of-veloria-container .tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Accordion (FAQ) --- */
+.house-of-veloria-container .accordion {
+  margin-top: 1.5rem;
+}
+
+.house-of-veloria-container .accordion-item {
+  border-bottom: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--velvet-rouge);
+  text-align: left;
+  font-weight: 500;
+}
+
+.house-of-veloria-container .accordion-header:hover {
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .accordion-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .accordion-item.active .accordion-icon {
+  transform: rotate(45deg);
+}
+
+.house-of-veloria-container .accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.house-of-veloria-container .accordion-item.active .accordion-content {
+  max-height: 500px;
+}
+
+.house-of-veloria-container .accordion-body {
+  padding: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #666;
+}
+
+/* --- Search Box --- */
+.house-of-veloria-container .search-box {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid var(--cream-linen);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.house-of-veloria-container .search-input:focus {
+  outline: none;
+  border-color: var(--warm-gold);
+}
+
+.house-of-veloria-container .search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+/* --- Size Charts --- */
+.house-of-veloria-container .size-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.house-of-veloria-container .size-table th,
+.house-of-veloria-container .size-table td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .size-table th {
+  background: var(--velvet-rouge);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.house-of-veloria-container .size-table tr:nth-child(even) {
+  background: var(--cream-linen);
+}
+
+/* --- Contact Page Styles --- */
+.house-of-veloria-container .contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.house-of-veloria-container .contact-info-panel {
+  background: var(--velvet-rouge);
+  color: var(--white);
+  padding: 2.5rem;
+}
+
+.house-of-veloria-container .contact-info-title {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  color: var(--warm-gold);
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.house-of-veloria-container .contact-info-icon {
+  font-size: 1.2rem;
+  color: var(--warm-gold);
+  margin-top: 3px;
+}
+
+.house-of-veloria-container .contact-info-text h4 {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.house-of-veloria-container .contact-info-text p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.house-of-veloria-container .contact-form-panel {
+  padding: 2rem;
+  background: var(--white);
+}
+
+/* --- Form Styles --- */
+.house-of-veloria-container .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.house-of-veloria-container .form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .form-input,
+.house-of-veloria-container .form-select,
+.house-of-veloria-container .form-textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #ddd;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background: var(--white);
+}
+
+.house-of-veloria-container .form-input:focus,
+.house-of-veloria-container .form-select:focus,
+.house-of-veloria-container .form-textarea:focus {
+  outline: none;
+  border-color: var(--warm-gold);
+}
+
+.house-of-veloria-container .form-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* --- Request Form (Two Column Grid) --- */
+.house-of-veloria-container .request-form-section {
+  background: var(--cream-linen);
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .request-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.house-of-veloria-container .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.house-of-veloria-container .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.house-of-veloria-container .checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--warm-gold);
+}
+
+/* --- Price Range Slider --- */
+.house-of-veloria-container .range-slider {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.house-of-veloria-container .range-slider input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.house-of-veloria-container
+  .range-slider
+  input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--warm-gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.house-of-veloria-container .range-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+/* --- Process Steps --- */
+.house-of-veloria-container .process-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .process-step {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.house-of-veloria-container .process-step-number {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--warm-gold);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.house-of-veloria-container .process-step-content h4 {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .process-step-content p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* --- Testimonial Cards (Full Page) --- */
+.house-of-veloria-container .testimonial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.house-of-veloria-container .testimonial-card-large {
+  background: var(--white);
+  padding: 2.5rem;
+  border: 1px solid var(--cream-linen);
+  text-align: center;
+  position: relative;
+}
+
+.house-of-veloria-container .testimonial-card-large::before {
+  content: '"';
+  font-family: var(--font-header);
+  font-size: 6rem;
+  color: var(--warm-gold);
+  opacity: 0.3;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  line-height: 1;
+}
+
+.house-of-veloria-container .testimonial-quote {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  font-style: italic;
+  color: var(--velvet-rouge);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.house-of-veloria-container .testimonial-customer {
+  font-weight: 600;
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .testimonial-location {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* --- Review Slider --- */
+.house-of-veloria-container .review-slider {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 0;
+}
+
+.house-of-veloria-container .review-track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.house-of-veloria-container .review-card {
+  flex: 0 0 300px;
+  background: var(--cream-linen);
+  padding: 2rem;
+}
+
+.house-of-veloria-container .review-stars {
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .review-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .review-author {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.house-of-veloria-container .verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--warm-gold);
+  color: var(--white);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* --- Leave Review CTA --- */
+.house-of-veloria-container .review-cta-section {
+  background: var(--velvet-rouge);
+  color: var(--white);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.house-of-veloria-container .review-cta-title {
+  font-family: var(--font-header);
+  font-size: 2.5rem;
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .review-cta-text {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.house-of-veloria-container .review-incentive {
+  background: rgba(180, 160, 106, 0.2);
+  padding: 1.5rem;
+  max-width: 500px;
+  margin: 2rem auto 0;
+  border: 1px solid var(--warm-gold);
+}
+
+.house-of-veloria-container .review-incentive h4 {
+  color: var(--warm-gold);
+  margin-bottom: 0.5rem;
+}
+
+/* --- Policy Pages --- */
+.house-of-veloria-container .policy-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+
+.house-of-veloria-container .policy-sidebar {
+  background: var(--cream-linen);
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .policy-nav-title {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .policy-nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--velvet-rouge);
+  border-left: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .policy-nav-link:hover,
+.house-of-veloria-container .policy-nav-link.active {
+  border-left-color: var(--warm-gold);
+  color: var(--warm-gold);
+  background: var(--white);
+}
+
+.house-of-veloria-container .policy-content {
+  padding: 0 1rem;
+}
+
+.house-of-veloria-container .policy-updated {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .policy-toc {
+  background: var(--cream-linen);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .policy-toc-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .policy-toc-list {
+  padding-left: 0;
+}
+
+.house-of-veloria-container .policy-toc-list li {
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .policy-toc-list a {
+  color: var(--warm-gold);
+  text-decoration: underline;
+}
+
+.house-of-veloria-container .policy-section {
+  margin-bottom: 2.5rem;
+}
+
+.house-of-veloria-container .policy-section-title {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .policy-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #444;
+}
+
+.house-of-veloria-container .policy-highlight {
+  background: var(--cream-linen);
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--warm-gold);
+  margin: 1rem 0;
+}
+
+/* --- Shop Placeholder --- */
+.house-of-veloria-container .shop-placeholder {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--cream-linen);
+}
+
+.house-of-veloria-container .shop-placeholder-content {
+  max-width: 600px;
+}
+
+.house-of-veloria-container .shop-placeholder-icon {
+  font-size: 4rem;
+  color: var(--warm-gold);
+  margin-bottom: 2rem;
+}
+
+.house-of-veloria-container .shop-placeholder-title {
+  font-family: var(--font-header);
+  font-size: 2.5rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .shop-placeholder-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* --- Back to Top Button --- */
+.house-of-veloria-container .back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--warm-gold);
+  color: var(--white);
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 2px solid var(--white);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.house-of-veloria-container .back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.house-of-veloria-container .back-to-top:hover {
+  background: var(--velvet-rouge);
+}
+
+/* --- Enhanced Footer --- */
+.house-of-veloria-container .footer-enhanced {
+  background: var(--velvet-rouge);
+  color: var(--cream-linen);
+  padding: 4rem 20px 2rem;
+}
+
+.house-of-veloria-container .footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(248, 244, 233, 0.2);
+}
+
+.house-of-veloria-container .footer-brand .footer-logo-img {
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .footer-brand .footer-logo-text {
+  font-family: var(--font-header);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--warm-gold);
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.house-of-veloria-container .footer-brand p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.house-of-veloria-container .footer-nav-title {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .footer-nav-list li {
+  margin-bottom: 0.75rem;
+}
+
+.house-of-veloria-container .footer-nav-list a {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .footer-nav-list a:hover {
+  opacity: 1;
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .footer-social {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.house-of-veloria-container .footer-social a {
+  width: 40px;
+  height: 40px;
+  background: rgba(248, 244, 233, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .footer-social a:hover {
+  background: var(--warm-gold);
+}
+
+.house-of-veloria-container .footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   RESPONSIVE STYLES FOR NEW COMPONENTS
+   ============================================================ */
+
+@media (min-width: 768px) {
+  .house-of-veloria-container .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .house-of-veloria-container .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .house-of-veloria-container .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .house-of-veloria-container .trust-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .house-of-veloria-container .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .house-of-veloria-container .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .house-of-veloria-container .two-column {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .house-of-veloria-container .guide-layout {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .house-of-veloria-container .guide-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+    height: fit-content;
+  }
+
+  .house-of-veloria-container .contact-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .house-of-veloria-container .request-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .house-of-veloria-container .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .house-of-veloria-container .testimonial-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .house-of-veloria-container .policy-layout {
+    grid-template-columns: 250px 1fr;
+  }
+
+  .house-of-veloria-container .policy-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+    height: fit-content;
+  }
+
+  .house-of-veloria-container .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .house-of-veloria-container .collections-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .house-of-veloria-container .values-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .house-of-veloria-container .process-steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Timeline responsive */
+@media (max-width: 767px) {
+  .house-of-veloria-container .timeline::before {
+    left: 20px;
+  }
+
+  .house-of-veloria-container .timeline-item,
+  .house-of-veloria-container .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 60px;
+    padding-right: 0;
+  }
+
+  .house-of-veloria-container .timeline-content,
+  .house-of-veloria-container .timeline-item:nth-child(even) .timeline-content {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+
+  .house-of-veloria-container .timeline-number,
+  .house-of-veloria-container .timeline-item:nth-child(even) .timeline-number {
+    left: 0;
+    right: auto;
+  }
+}
+
+/* ============================================================
+   WORDPRESS & THEME-SPECIFIC ADDITIONS
+   ============================================================ */
+
+/* --- WordPress Content Styles --- */
+.house-of-veloria-container .page-content-section {
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .page-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.house-of-veloria-container .page-content h2,
+.house-of-veloria-container .page-content h3,
+.house-of-veloria-container .page-content h4 {
+  font-family: var(--font-header);
+  color: var(--velvet-rouge);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .page-content h2 {
+  font-size: 2rem;
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .page-content h3 {
+  font-size: 1.5rem;
+}
+
+.house-of-veloria-container .page-content p {
+  margin-bottom: 1.5rem;
+}
+
+.house-of-veloria-container .page-content ul,
+.house-of-veloria-container .page-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.house-of-veloria-container .page-content li {
+  margin-bottom: 0.5rem;
+  list-style: disc;
+}
+
+.house-of-veloria-container .page-content ol li {
+  list-style: decimal;
+}
+
+/* --- Policy Page Specific Styles --- */
+.house-of-veloria-container .policy-hero {
+  background: var(--velvet-rouge);
+}
+
+.house-of-veloria-container .policy-section {
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .policy-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.house-of-veloria-container .policy-content h2 {
+  font-family: var(--font-header);
+  font-size: 1.8rem;
+  color: var(--warm-gold);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .policy-content p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .policy-content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.house-of-veloria-container .policy-content li {
+  margin-bottom: 0.5rem;
+  list-style: disc;
+  color: #444;
+}
+
+.house-of-veloria-container .shipping-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.house-of-veloria-container .shipping-table th,
+.house-of-veloria-container .shipping-table td {
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .shipping-table th {
+  background: var(--velvet-rouge);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.house-of-veloria-container .shipping-table tr:nth-child(even) {
+  background: var(--cream-linen);
+}
+
+/* --- Guide Page Styles --- */
+.house-of-veloria-container .guide-nav-section {
+  background: var(--cream-linen);
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.house-of-veloria-container .guide-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.house-of-veloria-container .guide-nav-item {
+  padding: 0.75rem 1.5rem;
+  background: var(--white);
+  color: var(--velvet-rouge);
+  border: 1px solid var(--warm-gold);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.house-of-veloria-container .guide-nav-item:hover {
+  background: var(--warm-gold);
+  color: var(--white);
+}
+
+.house-of-veloria-container .guide-section {
+  padding: 4rem 0;
+}
+
+.house-of-veloria-container .guide-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Shop Page Pagination */
+.house-of-veloria-container .hid-shop-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 3rem auto 2rem;
+  padding: 1.5rem 0;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.house-of-veloria-container .hid-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--warm-gold);
+  border-radius: 6px;
+  color: var(--velvet-rouge);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .hid-page-link:hover {
+  background: var(--warm-gold);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.house-of-veloria-container .hid-page-link.current {
+  background: var(--velvet-rouge);
+  border-color: var(--velvet-rouge);
+  color: var(--white);
+  cursor: default;
+}
+
+.house-of-veloria-container .hid-page-link.hid-page-nav {
+  padding: 0.5rem 1.5rem;
+  min-width: auto;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.house-of-veloria-container .hid-page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  color: var(--velvet-rouge);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Active Filter Display */
+.house-of-veloria-container .hid-active-filter {
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  background: var(--cream-linen);
+  border-left: 4px solid var(--warm-gold);
+  border-radius: 8px;
+  color: var(--velvet-rouge);
+  font-size: 15px;
+}
+
+/* Responsive pagination */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow on mobile */
+  body {
+    overflow-x: hidden;
+  }
+  
+  .house-of-veloria-container {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  .house-of-veloria-container > * {
+    max-width: 100vw;
+  }
+  
+  .house-of-veloria-container .hid-shop-pagination {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 2rem auto 1.5rem;
+    padding: 1rem 0;
+  }
+  
+  .house-of-veloria-container .hid-page-link {
+    min-width: 36px;
+    height: 36px;
+    padding: 0.4rem 0.8rem;
+    font-size: 14px;
+  }
+  
+  .house-of-veloria-container .hid-page-link.hid-page-nav {
+    padding: 0.4rem 1rem;
+    font-size: 13px;
+  }
+  
+  .house-of-veloria-container .hid-page-nav i {
+    font-size: 12px;
+  }
+}
+
+.house-of-veloria-container .guide-content h3 {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  color: var(--warm-gold);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .guide-content p,
+.house-of-veloria-container .guide-content ul,
+.house-of-veloria-container .guide-content ol {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .guide-content ul,
+.house-of-veloria-container .guide-content ol {
+  padding-left: 1.5rem;
+}
+
+.house-of-veloria-container .guide-content li {
+  margin-bottom: 0.5rem;
+  list-style: disc;
+}
+
+.house-of-veloria-container .guide-content ol li {
+  list-style: decimal;
+}
+
+/* --- FAQ Accordion --- */
+.house-of-veloria-container .faq-accordion {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.house-of-veloria-container .faq-item {
+  border-bottom: 1px solid var(--cream-linen);
+}
+
+.house-of-veloria-container .faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--velvet-rouge);
+  text-align: left;
+  font-weight: 500;
+}
+
+.house-of-veloria-container .faq-question:hover {
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .faq-question i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .faq-item.active .faq-question i {
+  transform: rotate(180deg);
+}
+
+.house-of-veloria-container .faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.house-of-veloria-container .faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.house-of-veloria-container .faq-answer p {
+  padding: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #666;
+}
+
+/* --- Testimonials Page Grid --- */
+.house-of-veloria-container .testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.house-of-veloria-container .testimonial-item {
+  background: var(--white);
+  padding: 2rem;
+  border: 1px solid var(--cream-linen);
+  text-align: center;
+}
+
+.house-of-veloria-container .testimonial-stars {
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .testimonial-item .testimonial-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  font-style: italic;
+  color: var(--velvet-rouge);
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .testimonial-item .testimonial-author {
+  display: block;
+}
+
+.house-of-veloria-container .author-name {
+  font-weight: 600;
+  color: var(--warm-gold);
+  display: block;
+}
+
+.house-of-veloria-container .author-location {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* --- Order Confirmation --- */
+.house-of-veloria-container .order-confirmation-section {
+  padding: 4rem 0;
+}
+
+/* --- Order Tracking --- */
+.house-of-veloria-container .order-tracking-section {
+  padding: 4rem 0;
+}
+
+/* --- Posts/Blog --- */
+.house-of-veloria-container .posts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.house-of-veloria-container .post-card {
+  background: var(--white);
+  border: 1px solid var(--cream-linen);
+  overflow: hidden;
+}
+
+.house-of-veloria-container .post-thumbnail img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.house-of-veloria-container .post-content {
+  padding: 1.5rem;
+}
+
+.house-of-veloria-container .post-title {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  color: var(--velvet-rouge);
+  margin-bottom: 0.5rem;
+}
+
+.house-of-veloria-container .post-title a:hover {
+  color: var(--warm-gold);
+}
+
+.house-of-veloria-container .post-meta {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .post-excerpt {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.house-of-veloria-container .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+
+.house-of-veloria-container .pagination a,
+.house-of-veloria-container .pagination span {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--warm-gold);
+  color: var(--warm-gold);
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container .pagination a:hover,
+.house-of-veloria-container .pagination .current {
+  background: var(--warm-gold);
+  color: var(--white);
+}
+
+.house-of-veloria-container .no-posts {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.house-of-veloria-container .no-posts h2 {
+  font-family: var(--font-header);
+  font-size: 2rem;
+  color: var(--warm-gold);
+  margin-bottom: 1rem;
+}
+
+/* --- Cart Icon in Header --- */
+.house-of-veloria-container .nav-cart {
+  margin-left: 1rem;
+}
+
+.house-of-veloria-container .cart-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  color: var(--white);
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.house-of-veloria-container .cart-count {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: var(--warm-gold);
+  color: var(--white);
+  font-size: 0.7rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Price Display --- */
+.house-of-veloria-container .price-regular {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9em;
+  margin-right: 0.5rem;
+}
+
+.house-of-veloria-container .price-sale {
+  color: var(--warm-gold);
+  font-weight: 600;
+}
+
+/* --- Responsive Additions --- */
+@media (min-width: 768px) {
+  .house-of-veloria-container .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .house-of-veloria-container .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .house-of-veloria-container .testimonials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .house-of-veloria-container .posts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================================
+   WORDPRESS ADMIN BAR ADJUSTMENTS
+   ============================================================ */
+
+/* Adjust for WordPress admin bar on mobile (46px) */
+.admin-bar .house-of-veloria-container .header {
+  top: 46px;
+}
+
+/* Adjust hero section for admin bar on mobile */
+.admin-bar .house-of-veloria-container .hero-section {
+  margin-top: 46px;
+}
+
+/* Adjust page hero for admin bar on mobile */
+.admin-bar .house-of-veloria-container .page-hero {
+  margin-top: 46px;
+}
+
+/* Desktop admin bar adjustments (32px at 783px and above) */
+@media screen and (min-width: 783px) {
+  .admin-bar .house-of-veloria-container .header {
+    top: 32px;
+  }
+
+  .admin-bar .house-of-veloria-container .hero-section {
+    margin-top: 32px;
+  }
+
+  .admin-bar .house-of-veloria-container .page-hero {
+    margin-top: 32px;
+  }
+}
+
+/* Adjust back to top button for admin bar */
+.admin-bar .house-of-veloria-container .back-to-top {
+  bottom: 80px;
+}
+
+@media screen and (min-width: 783px) {
+  .admin-bar .house-of-veloria-container .back-to-top {
+    bottom: 30px;
+  }
+}
+
+/* Adjust smooth scroll offset for admin bar */
+.admin-bar .house-of-veloria-container {
+  scroll-padding-top: calc(var(--header-height) + 46px);
+}
+
+@media screen and (min-width: 783px) {
+  .admin-bar .house-of-veloria-container {
+    scroll-padding-top: calc(var(--header-height) + 32px);
+  }
+}
+
+
+/* --- Branded Logo Filter --- */
+/* Filter to match var(--warm-gold) #b4a06a */
+.house-of-veloria-container .branded-logo {
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+}
+
+.house-of-veloria-container a:hover .branded-logo {
+   /* Match hover transition if needed, but keeping it simple first */
+   filter: invert(73%) sepia(13%) saturate(1469%) hue-rotate(338deg) brightness(110%) contrast(85%);
+}
+
+/* END: House of Veloria Scoped CSS */
+
+/* --- Floating Cart Icon --- */
+.floating-cart-icon {
+    position: fixed;
+    position: fixed;
+    bottom: 90px; /* Sitting above back-to-top button (20px + 50px + 20px gap) */
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #b4a06a !important; /* Warm Gold Hardcoded */
+    color: #470108 !important; /* Velvet Rouge */
+    border-radius: 50%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 2147483647; /* Max Z-Index */
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: 2px solid #ffffff;
+}
+
+.floating-cart-icon:hover {
+    background-color: #f8f4e9 !important; /* Cream Linen */
+    transform: translateY(-5px);
+    color: #470108 !important;
+}
+
+.floating-cart-icon i {
+    font-size: 20px;
+}
+
+.floating-cart-icon .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--velvet-rouge);
+    color: var(--white);
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid var(--white);
+}
+
+/* Ensure Back to Top is positioned correctly to not overlap if needed, though bottom 20px is standard */
+.back-to-top {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* --- Notification Toast --- */
+.hid-notification {
+    position: fixed;
+    top: 100px; /* Lower than header */
+    right: 20px;
+    background-color: #b4a06a !important; /* Warm Gold Hardcoded */
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 99999;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    
+    /* Animation: Float in from right */
+    animation: slideInRight 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

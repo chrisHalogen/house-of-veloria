@@ -1,0 +1,906 @@
+<?php
+
+/**
+ * Page Setup Utility
+ *
+ * Creates all necessary pages for the theme with one click.
+ *
+ * @package HID_HOV_Theme
+ */
+
+// If this file is called directly, abort.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Helper function to get page by title (replaces deprecated get_page_by_title)
+ *
+ * @param string $title Page title
+ * @return WP_Post|null Page object or null if not found
+ */
+function hid_hov_get_page_by_title($title)
+{
+    $pages = get_posts(array(
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'title' => $title,
+        'posts_per_page' => 1,
+        'no_found_rows' => true,
+        'ignore_sticky_posts' => true,
+        'suppress_filters' => false,
+    ));
+
+    return !empty($pages) ? $pages[0] : null;
+}
+
+/**
+ * Add Page Setup submenu
+ */
+function hid_hov_add_page_setup_menu()
+{
+    add_submenu_page(
+        'hid-commerce',
+        __('Page Setup', 'hid-hov-theme'),
+        __('Page Setup', 'hid-hov-theme'),
+        'manage_options',
+        'hid-commerce-page-setup',
+        'hid_hov_page_setup_page'
+    );
+}
+add_action('admin_menu', 'hid_hov_add_page_setup_menu', 100);
+
+/**
+ * Page Setup page content
+ */
+function hid_hov_page_setup_page()
+{
+    // Check user capabilities
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have sufficient permissions to access this page.', 'hid-hov-theme'));
+    }
+
+    // Handle form submission for pages
+    if (isset($_POST['hid_create_pages']) && check_admin_referer('hid_create_pages_nonce')) {
+        $result = hid_hov_create_all_pages();
+
+        if ($result['success']) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+            if (!empty($result['details'])) {
+                echo '<div class="notice notice-info"><ul>';
+                foreach ($result['details'] as $detail) {
+                    echo '<li>' . esc_html($detail) . '</li>';
+                }
+                echo '</ul></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+        }
+    }
+
+    // Handle form submission for menus
+    if (isset($_POST['hid_create_menus']) && check_admin_referer('hid_create_menus_nonce')) {
+        $result = hid_hov_create_all_menus();
+
+        if ($result['success']) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+            if (!empty($result['details'])) {
+                echo '<div class="notice notice-info"><ul>';
+                foreach ($result['details'] as $detail) {
+                    echo '<li>' . esc_html($detail) . '</li>';
+                }
+                echo '</ul></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+        }
+    }
+
+    // Handle form submission for seed products
+    if (isset($_POST['hid_create_seed_products']) && check_admin_referer('hid_create_seed_products_nonce')) {
+        set_time_limit(300); // Increase time limit for bulk operations
+        $result = hid_hov_create_seed_products();
+
+        if ($result['success']) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+            if (!empty($result['details'])) {
+                echo '<div class="notice notice-info"><ul>';
+                foreach ($result['details'] as $detail) {
+                    echo '<li>' . esc_html($detail) . '</li>';
+                }
+                echo '</ul></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+        }
+    }
+
+    // Handle form submission for deleting seed products
+    if (isset($_POST['hid_delete_seed_products']) && check_admin_referer('hid_delete_seed_products_nonce')) {
+        set_time_limit(300); // Increase time limit for bulk operations
+        $result = hid_hov_delete_seed_products();
+
+        if ($result['success']) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+            if (!empty($result['details'])) {
+                echo '<div class="notice notice-info"><ul>';
+                foreach ($result['details'] as $detail) {
+                    echo '<li>' . esc_html($detail) . '</li>';
+                }
+                echo '</ul></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($result['message']) . '</p></div>';
+        }
+    }
+
+?>
+    <div class="wrap">
+        <h1><?php _e('Theme Page Setup', 'hid-hov-theme'); ?></h1>
+
+        <div class="card" style="max-width: 800px;">
+            <h2><?php _e('Create Theme Pages', 'hid-hov-theme'); ?></h2>
+            <p><?php _e('This tool will create all necessary pages for your HID HOV Theme. If pages with the same titles already exist, they will be deleted and recreated with the correct templates and content.', 'hid-hov-theme'); ?></p>
+
+            <h3><?php _e('Pages that will be created:', 'hid-hov-theme'); ?></h3>
+            <ul style="list-style: disc; margin-left: 2rem;">
+                <li><?php _e('Home (Homepage)', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Shop (Shop Page)', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Our Story (Curation Story)', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Contact', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Testimonials', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Shopping Guide', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Privacy Policy', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Terms & Conditions', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Refund Policy', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Shipping Policy', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Order Confirmation', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Track Your Order', 'hid-hov-theme'); ?></li>
+            </ul>
+
+            <form method="post" action="">
+                <?php wp_nonce_field('hid_create_pages_nonce'); ?>
+                <p>
+                    <button type="submit" name="hid_create_pages" class="button button-primary button-hero">
+                        <span class="dashicons dashicons-admin-page" style="margin-top: 6px;"></span>
+                        <?php _e('Create All Pages', 'hid-hov-theme'); ?>
+                    </button>
+                </p>
+                <p class="description">
+                    <?php _e('Note: This action will delete and recreate existing pages with the same titles. This cannot be undone.', 'hid-hov-theme'); ?>
+                </p>
+            </form>
+        </div>
+
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2><?php _e('Create Navigation Menus', 'hid-hov-theme'); ?></h2>
+            <p><?php _e('After creating pages, you can automatically create and configure all navigation menus. This will create 4 menus and assign them to the correct theme locations.', 'hid-hov-theme'); ?></p>
+
+            <h3><?php _e('Menus that will be created:', 'hid-hov-theme'); ?></h3>
+            <ul style="list-style: disc; margin-left: 2rem;">
+                <li><strong><?php _e('Primary Menu', 'hid-hov-theme'); ?></strong> - <?php _e('Home, Shop, Our Story, Contact', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Footer Quick Links', 'hid-hov-theme'); ?></strong> - <?php _e('Home, Shop, Our Story, Testimonials, Contact', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Footer Customer Care', 'hid-hov-theme'); ?></strong> - <?php _e('Shopping Guide, Track Your Order', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Footer Policies', 'hid-hov-theme'); ?></strong> - <?php _e('Privacy Policy, Terms & Conditions, Refund Policy, Shipping Policy', 'hid-hov-theme'); ?></li>
+            </ul>
+
+            <form method="post" action="">
+                <?php wp_nonce_field('hid_create_menus_nonce'); ?>
+                <p>
+                    <button type="submit" name="hid_create_menus" class="button button-primary button-hero">
+                        <span class="dashicons dashicons-menu" style="margin-top: 6px;"></span>
+                        <?php _e('Create All Menus', 'hid-hov-theme'); ?>
+                    </button>
+                </p>
+                <p class="description">
+                    <?php _e('Note: This will delete and recreate existing menus with the same names. Make sure pages are created first.', 'hid-hov-theme'); ?>
+                </p>
+            </form>
+        </div>
+
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2 style="color: #d63638;"><?php _e('⚠️ Development: Seed Products', 'hid-hov-theme'); ?></h2>
+            <p><?php _e('Generate dummy jewelry products for testing and development. This will create 7 categories with 30 products each (210 total products).', 'hid-hov-theme'); ?></p>
+
+            <h3><?php _e('Categories that will be created:', 'hid-hov-theme'); ?></h3>
+            <ul style="list-style: disc; margin-left: 2rem;">
+                <li><strong><?php _e('Earrings', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Rings', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Necklaces', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Bracelets', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Brooches', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Anklets', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+                <li><strong><?php _e('Pendants', 'hid-hov-theme'); ?></strong> - <?php _e('30 products', 'hid-hov-theme'); ?></li>
+            </ul>
+
+            <form method="post" action="" onsubmit="return confirm('⚠️ This will create 210 products! This may take a few minutes. Continue?');">
+                <?php wp_nonce_field('hid_create_seed_products_nonce'); ?>
+                <p>
+                    <button type="submit" name="hid_create_seed_products" class="button button-secondary button-hero">
+                        <span class="dashicons dashicons-products" style="margin-top: 6px;"></span>
+                        <?php _e('Generate Seed Products', 'hid-hov-theme'); ?>
+                    </button>
+                </p>
+                <p class="description" style="color: #d63638;">
+                    <?php _e('⚠️ WARNING: For development only! This will create 210 dummy products with real images. This may take 2-3 minutes to complete.', 'hid-hov-theme'); ?>
+                </p>
+            </form>
+
+            <form method="post" action="" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;" onsubmit="return confirm('⚠️ This will DELETE ALL seed products and categories! This action cannot be undone. Continue?');">
+                <?php wp_nonce_field('hid_delete_seed_products_nonce'); ?>
+                <p>
+                    <button type="submit" name="hid_delete_seed_products" class="button button-link-delete button-hero" style="color: #b32d2e;">
+                        <span class="dashicons dashicons-trash" style="margin-top: 6px;"></span>
+                        <?php _e('Delete All Seed Products', 'hid-hov-theme'); ?>
+                    </button>
+                </p>
+                <p class="description" style="color: #d63638;">
+                    <?php _e('⚠️ DANGER: This will permanently delete all seed products and their categories. This action cannot be undone!', 'hid-hov-theme'); ?>
+                </p>
+            </form>
+        </div>
+
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2><?php _e('After Creating Pages & Menus', 'hid-hov-theme'); ?></h2>
+            <ol style="list-style: decimal; margin-left: 2rem;">
+                <li><?php _e('Go to Settings → Reading', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Set "A static page" as your homepage', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Select "Home" as the Homepage', 'hid-hov-theme'); ?></li>
+                <li><?php _e('Your menus are already created and assigned!', 'hid-hov-theme'); ?></li>
+                <li><?php _e('You can customize menus at Appearance → Menus', 'hid-hov-theme'); ?></li>
+            </ol>
+        </div>
+    </div>
+<?php
+}
+
+/**
+ * Create all theme pages
+ *
+ * @return array Result with success status and message
+ */
+function hid_hov_create_all_pages()
+{
+    $pages_config = array(
+        array(
+            'title' => 'Home',
+            'template' => 'templates/page-home.php',
+            'content' => '',
+            'slug' => 'home'
+        ),
+        array(
+            'title' => 'Shop',
+            'template' => 'templates/page-shop.php',
+            'content' => '',
+            'slug' => 'shop'
+        ),
+        array(
+            'title' => 'Our Story',
+            'template' => 'templates/page-curation-story.php',
+            'content' => '',
+            'slug' => 'our-story'
+        ),
+        array(
+            'title' => 'Contact',
+            'template' => 'templates/page-contact.php',
+            'content' => '',
+            'slug' => 'contact'
+        ),
+        array(
+            'title' => 'Testimonials',
+            'template' => 'templates/page-testimonials.php',
+            'content' => '',
+            'slug' => 'testimonials'
+        ),
+        array(
+            'title' => 'Shopping Guide',
+            'template' => 'templates/page-shopping-guide.php',
+            'content' => '',
+            'slug' => 'shopping-guide'
+        ),
+        array(
+            'title' => 'Privacy Policy',
+            'template' => 'templates/page-privacy-policy.php',
+            'content' => '',
+            'slug' => 'privacy-policy'
+        ),
+        array(
+            'title' => 'Terms & Conditions',
+            'template' => 'templates/page-terms.php',
+            'content' => '',
+            'slug' => 'terms-and-conditions'
+        ),
+        array(
+            'title' => 'Refund Policy',
+            'template' => 'templates/page-refund-policy.php',
+            'content' => '',
+            'slug' => 'refund-policy'
+        ),
+        array(
+            'title' => 'Shipping Policy',
+            'template' => 'templates/page-shipping-policy.php',
+            'content' => '',
+            'slug' => 'shipping-policy'
+        ),
+        array(
+            'title' => 'Order Confirmation',
+            'template' => 'templates/page-order-confirmation.php',
+            'content' => '',
+            'slug' => 'order-confirmation'
+        ),
+        array(
+            'title' => 'Track Your Order',
+            'template' => 'templates/page-order-tracking.php',
+            'content' => '',
+            'slug' => 'track-order'
+        ),
+    );
+
+    $created = array();
+    $errors = array();
+    $details = array();
+
+    foreach ($pages_config as $page_config) {
+        // Check if page already exists
+        $existing_page = hid_hov_get_page_by_title($page_config['title']);
+
+        if ($existing_page) {
+            // Delete existing page
+            wp_delete_post($existing_page->ID, true);
+            $details[] = sprintf(__('Deleted existing page: %s', 'hid-hov-theme'), $page_config['title']);
+        }
+
+        // Create the page
+        $page_data = array(
+            'post_title'    => $page_config['title'],
+            'post_name'     => $page_config['slug'],
+            'post_content'  => $page_config['content'],
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_author'   => get_current_user_id(),
+        );
+
+        $page_id = wp_insert_post($page_data);
+
+        if (is_wp_error($page_id)) {
+            $errors[] = sprintf(__('Failed to create page: %s - %s', 'hid-hov-theme'), $page_config['title'], $page_id->get_error_message());
+        } else {
+            // Set the page template
+            update_post_meta($page_id, '_wp_page_template', $page_config['template']);
+
+            $created[] = $page_config['title'];
+            $details[] = sprintf(__('Created page: %s (ID: %d)', 'hid-hov-theme'), $page_config['title'], $page_id);
+        }
+    }
+
+    if (!empty($errors)) {
+        return array(
+            'success' => false,
+            'message' => __('Some pages could not be created. Please check the errors below.', 'hid-hov-theme'),
+            'details' => array_merge($details, $errors)
+        );
+    }
+
+    return array(
+        'success' => true,
+        'message' => sprintf(__('Successfully created %d pages!', 'hid-hov-theme'), count($created)),
+        'details' => $details
+    );
+}
+
+/**
+ * Create all theme navigation menus
+ *
+ * @return array Result with success status and message
+ */
+function hid_hov_create_all_menus()
+{
+    $details = array();
+    $errors = array();
+
+    // Get all pages first
+    $home_page = hid_hov_get_page_by_title('Home');
+    $shop_page = hid_hov_get_page_by_title('Shop');
+    $story_page = hid_hov_get_page_by_title('Our Story');
+    $contact_page = hid_hov_get_page_by_title('Contact');
+    $testimonials_page = hid_hov_get_page_by_title('Testimonials');
+    $guide_page = hid_hov_get_page_by_title('Shopping Guide');
+    $track_page = hid_hov_get_page_by_title('Track Your Order');
+    $privacy_page = hid_hov_get_page_by_title('Privacy Policy');
+    $terms_page = hid_hov_get_page_by_title('Terms & Conditions');
+    $refund_page = hid_hov_get_page_by_title('Refund Policy');
+    $shipping_page = hid_hov_get_page_by_title('Shipping Policy');
+
+    // Check if pages exist
+    if (!$home_page || !$shop_page) {
+        return array(
+            'success' => false,
+            'message' => __('Please create pages first before creating menus.', 'hid-hov-theme'),
+            'details' => array()
+        );
+    }
+
+    // Menu configurations
+    $menus_config = array(
+        array(
+            'name' => 'Primary Menu',
+            'location' => 'primary',
+            'items' => array(
+                array('page' => $home_page, 'title' => 'Home'),
+                array('page' => $shop_page, 'title' => 'Shop'),
+                array('page' => $story_page, 'title' => 'Story'),
+                array('page' => $contact_page, 'title' => 'Contact'),
+            )
+        ),
+        array(
+            'name' => 'Footer Quick Links',
+            'location' => 'footer-links',
+            'items' => array(
+                array('page' => $home_page, 'title' => 'Home'),
+                array('page' => $shop_page, 'title' => 'Shop'),
+                array('page' => $story_page, 'title' => 'Our Story'),
+                array('page' => $testimonials_page, 'title' => 'Testimonials'),
+                array('page' => $contact_page, 'title' => 'Contact'),
+            )
+        ),
+        array(
+            'name' => 'Footer Customer Care',
+            'location' => 'footer-care',
+            'items' => array(
+                array('page' => $guide_page, 'title' => 'Shopping Guide'),
+                array('page' => $track_page, 'title' => 'Track Order'),
+            )
+        ),
+        array(
+            'name' => 'Footer Policies',
+            'location' => 'footer-policies',
+            'items' => array(
+                array('page' => $privacy_page, 'title' => 'Privacy Policy'),
+                array('page' => $terms_page, 'title' => 'Terms & Conditions'),
+                array('page' => $refund_page, 'title' => 'Refund Policy'),
+                array('page' => $shipping_page, 'title' => 'Shipping Policy'),
+            )
+        ),
+    );
+
+    $created_menus = array();
+
+    foreach ($menus_config as $menu_config) {
+        // Check if menu already exists
+        $existing_menu = wp_get_nav_menu_object($menu_config['name']);
+
+        if ($existing_menu) {
+            // Delete existing menu
+            wp_delete_nav_menu($existing_menu->term_id);
+            $details[] = sprintf(__('Deleted existing menu: %s', 'hid-hov-theme'), $menu_config['name']);
+        }
+
+        // Create the menu
+        $menu_id = wp_create_nav_menu($menu_config['name']);
+
+        if (is_wp_error($menu_id)) {
+            $errors[] = sprintf(__('Failed to create menu: %s - %s', 'hid-hov-theme'), $menu_config['name'], $menu_id->get_error_message());
+            continue;
+        }
+
+        $details[] = sprintf(__('Created menu: %s', 'hid-hov-theme'), $menu_config['name']);
+
+        // Add menu items
+        $menu_order = 1;
+        foreach ($menu_config['items'] as $item_config) {
+            if (!$item_config['page']) {
+                continue; // Skip if page doesn't exist
+            }
+
+            $item_data = array(
+                'menu-item-object-id' => $item_config['page']->ID,
+                'menu-item-object' => 'page',
+                'menu-item-type' => 'post_type',
+                'menu-item-status' => 'publish',
+                'menu-item-title' => $item_config['title'],
+                'menu-item-position' => $menu_order++,
+            );
+
+            $item_id = wp_update_nav_menu_item($menu_id, 0, $item_data);
+
+            if (is_wp_error($item_id)) {
+                $errors[] = sprintf(__('Failed to add menu item: %s', 'hid-hov-theme'), $item_config['title']);
+            } else {
+                $details[] = sprintf(__('Added menu item: %s to %s', 'hid-hov-theme'), $item_config['title'], $menu_config['name']);
+            }
+        }
+
+        // Assign menu to location
+        $locations = get_theme_mod('nav_menu_locations');
+        if (!is_array($locations)) {
+            $locations = array();
+        }
+        $locations[$menu_config['location']] = $menu_id;
+        set_theme_mod('nav_menu_locations', $locations);
+
+        $details[] = sprintf(__('Assigned %s to location: %s', 'hid-hov-theme'), $menu_config['name'], $menu_config['location']);
+        $created_menus[] = $menu_config['name'];
+    }
+
+    if (!empty($errors)) {
+        return array(
+            'success' => false,
+            'message' => __('Some menus could not be created. Please check the errors below.', 'hid-hov-theme'),
+            'details' => array_merge($details, $errors)
+        );
+    }
+
+    return array(
+        'success' => true,
+        'message' => sprintf(__('Successfully created %d menus and assigned them to theme locations!', 'hid-hov-theme'), count($created_menus)),
+        'details' => $details
+    );
+}
+
+/**
+ * Add admin notice to setup pages after theme activation
+ */
+function hid_hov_page_setup_admin_notice()
+{
+    // Check if we should show the notice
+    $pages_created = get_option('hid_hov_pages_created', false);
+
+    if ($pages_created) {
+        return;
+    }
+
+    // Check if we're on the HID Commerce page
+    $screen = get_current_screen();
+    if (!$screen) {
+        return;
+    }
+
+?>
+    <div class="notice notice-info is-dismissible">
+        <p>
+            <strong><?php _e('HID HOV Theme:', 'hid-hov-theme'); ?></strong>
+            <?php _e('Welcome! To get started, create your theme pages.', 'hid-hov-theme'); ?>
+            <a href="<?php echo admin_url('admin.php?page=hid-commerce-page-setup'); ?>" class="button button-primary" style="margin-left: 10px;">
+                <?php _e('Create Pages Now', 'hid-hov-theme'); ?>
+            </a>
+        </p>
+    </div>
+<?php
+}
+add_action('admin_notices', 'hid_hov_page_setup_admin_notice');
+
+/**
+ * Mark pages as created when all pages exist
+ */
+function hid_hov_check_pages_created()
+{
+    $required_pages = array(
+        'Home',
+        'Shop',
+        'Our Story',
+        'Contact',
+        'Testimonials',
+        'Shopping Guide',
+        'Privacy Policy',
+        'Terms & Conditions',
+        'Refund Policy',
+        'Shipping Policy',
+        'Order Confirmation',
+        'Track Your Order'
+    );
+
+    $all_exist = true;
+    foreach ($required_pages as $title) {
+        if (!hid_hov_get_page_by_title($title)) {
+            $all_exist = false;
+            break;
+        }
+    }
+
+    if ($all_exist) {
+        update_option('hid_hov_pages_created', true);
+    } else {
+        update_option('hid_hov_pages_created', false);
+    }
+}
+add_action('wp_loaded', 'hid_hov_check_pages_created');
+
+/**
+ * Create seed products for development
+ */
+function hid_hov_create_seed_products()
+{
+    global $wpdb;
+    $db = HID_Commerce_Database::get_instance();
+    $details = array();
+    $total_created = 0;
+
+    // Define jewelry categories with image URLs
+    $categories = array(
+        array(
+            'name' => 'Earrings',
+            'slug' => 'earrings',
+            'description' => 'Elegant earrings to complement any outfit',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/Earrings.jpg',
+        ),
+        array(
+            'name' => 'Rings',
+            'slug' => 'rings',
+            'description' => 'Stunning rings for every occasion',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/Rings.jpg',
+        ),
+        array(
+            'name' => 'Necklaces',
+            'slug' => 'necklaces',
+            'description' => 'Beautiful necklaces to enhance your neckline',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/Necklaces.jpg',
+        ),
+        array(
+            'name' => 'Bracelets',
+            'slug' => 'bracelets',
+            'description' => 'Exquisite bracelets to adorn your wrists',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/bracelet.jpg',
+        ),
+        array(
+            'name' => 'Brooches',
+            'slug' => 'brooches',
+            'description' => 'Timeless brooches with intricate designs',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/Brooches.jpg',
+        ),
+        array(
+            'name' => 'Anklets',
+            'slug' => 'anklets',
+            'description' => 'Delicate anklets for a touch of elegance',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/ank.jpg',
+        ),
+        array(
+            'name' => 'Pendants',
+            'slug' => 'pendants',
+            'description' => 'Charming pendants with unique character',
+            'image_url' => 'https://hoveloria.com/wp-content/uploads/2025/12/Pendants.jpg',
+        ),
+    );
+
+    // Product name variations for each category
+    $product_styles = array(
+        'Earrings' => array('Stud', 'Drop', 'Hoop', 'Dangle', 'Chandelier', 'Huggie'),
+        'Rings' => array('Solitaire', 'Band', 'Cocktail', 'Stackable', 'Statement', 'Eternity'),
+        'Necklaces' => array('Choker', 'Pendant', 'Chain', 'Bib', 'Statement', 'Layered'),
+        'Bracelets' => array('Bangle', 'Cuff', 'Chain', 'Tennis', 'Charm', 'Beaded'),
+        'Brooches' => array('Vintage', 'Floral', 'Animal', 'Geometric', 'Art Deco', 'Classic'),
+        'Anklets' => array('Chain', 'Beaded', 'Charm', 'Layered', 'Bohemian', 'Delicate'),
+        'Pendants' => array('Heart', 'Cross', 'Initial', 'Gemstone', 'Locket', 'Medallion'),
+    );
+
+    $materials = array('Gold', 'Silver', 'Rose Gold', 'Platinum', 'White Gold');
+    $gemstones = array('Diamond', 'Ruby', 'Sapphire', 'Emerald', 'Pearl', 'Amethyst', 'Topaz', 'Opal');
+    $descriptors = array('Elegant', 'Luxurious', 'Classic', 'Modern', 'Vintage', 'Minimalist', 'Ornate', 'Delicate');
+
+    // Create categories first
+    $category_ids = array();
+    $category_images = array();
+    foreach ($categories as $category_data) {
+        $category_images[$category_data['name']] = $category_data['image_url'];
+
+        // Check if category exists
+        $existing = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM {$wpdb->prefix}hid_product_categories WHERE slug = %s",
+                $category_data['slug']
+            )
+        );
+
+        if ($existing) {
+            $category_ids[$category_data['name']] = $existing->id;
+            // Update category image if it exists
+            $wpdb->update(
+                $wpdb->prefix . 'hid_product_categories',
+                array('image_url' => $category_data['image_url']),
+                array('id' => $existing->id),
+                array('%s'),
+                array('%d')
+            );
+            $details[] = "Category '{$category_data['name']}' already exists (image updated)";
+        } else {
+            $cat_id = $db->create_category($category_data);
+            if ($cat_id) {
+                $category_ids[$category_data['name']] = $cat_id;
+                $details[] = "Created category: {$category_data['name']} with image";
+            }
+        }
+    }
+
+    // Generate products for each category
+    foreach ($categories as $category) {
+        $category_name = $category['name'];
+        $category_id = $category_ids[$category_name];
+        $styles = $product_styles[$category_name];
+
+        // Randomly select 5 product positions to be featured (out of 30)
+        $featured_positions = array_rand(array_flip(range(1, 30)), 5);
+
+        for ($i = 1; $i <= 30; $i++) {
+            // Generate unique product name
+            $style = $styles[array_rand($styles)];
+            $material = $materials[array_rand($materials)];
+            $descriptor = $descriptors[array_rand($descriptors)];
+
+            // Randomly include gemstone for some products
+            $has_gemstone = rand(0, 1);
+            $gemstone = $has_gemstone ? $gemstones[array_rand($gemstones)] : '';
+
+            $product_name = $descriptor . ' ' . $material . ' ' . $style;
+            if ($gemstone) {
+                $product_name .= ' with ' . $gemstone;
+            }
+            $product_name .= ' - ' . $category_name;
+
+            // Generate price between $50 and $500
+            $base_price = rand(50, 500);
+            $price = round($base_price + (rand(0, 99) / 100), 2);
+
+            // 30% chance of having a sale
+            $sale_price = null;
+            if (rand(1, 10) <= 3) {
+                $discount = rand(10, 30); // 10-30% discount
+                $sale_price = round($price * (1 - $discount / 100), 2);
+            }
+
+            // Generate description
+            $description = "Discover the timeless beauty of our {$product_name}. ";
+            $description .= "Handcrafted with precision using the finest {$material}, ";
+            $description .= "this exquisite piece embodies elegance and sophistication. ";
+            if ($gemstone) {
+                $description .= "Adorned with stunning {$gemstone} stones, ";
+            }
+            $description .= "it's perfect for special occasions or everyday luxury. ";
+            $description .= "Each piece is unique and comes with our certificate of authenticity.";
+
+            // Use the category image for all products in this category
+            $image_url = $category_images[$category_name];
+
+            // Generate SKU
+            $sku = strtoupper(substr($category['slug'], 0, 3)) . '-' . str_pad($i, 4, '0', STR_PAD_LEFT);
+
+            // Stock quantity between 5 and 50
+            $stock = rand(5, 50);
+
+            // Create product data
+            $product_data = array(
+                'name' => $product_name,
+                'description' => $description,
+                'price' => $price,
+                'sale_price' => $sale_price,
+                'sku' => $sku,
+                'stock_quantity' => $stock,
+                'low_stock_threshold' => 5,
+                'featured' => in_array($i, $featured_positions) ? 1 : 0, // 5 featured products per category
+                'image_url' => $image_url,
+                'has_variants' => 0,
+                'category_id' => $category_id,
+                'meta_title' => $product_name . ' | House Of Veloria',
+                'meta_description' => substr($description, 0, 150),
+                'slug' => sanitize_title($product_name),
+                'status' => 'publish',
+            );
+
+            $product_id = $db->create_product($product_data);
+
+            if ($product_id) {
+                $total_created++;
+            }
+        }
+
+        $details[] = "Created 30 products in category: {$category_name}";
+    }
+
+    return array(
+        'success' => true,
+        'message' => sprintf(__('Successfully created %d products across 7 categories with images and featured products!', 'hid-hov-theme'), $total_created),
+        'details' => $details
+    );
+}
+
+/**
+ * Delete all seed products and their categories
+ */
+function hid_hov_delete_seed_products()
+{
+    global $wpdb;
+    $details = array();
+
+    // Category slugs that we want to delete (seed categories only)
+    $seed_category_slugs = array('earrings', 'rings', 'necklaces', 'bracelets', 'brooches', 'anklets', 'pendants');
+
+    $products_table = $wpdb->prefix . 'hid_products';
+    $categories_table = $wpdb->prefix . 'hid_product_categories';
+    $images_table = $wpdb->prefix . 'hid_product_images';
+    $variants_table = $wpdb->prefix . 'hid_product_variants';
+
+    $total_products_deleted = 0;
+    $total_categories_deleted = 0;
+
+    // Get all seed categories
+    $placeholders = implode(',', array_fill(0, count($seed_category_slugs), '%s'));
+    $seed_categories = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT id, name, slug FROM $categories_table WHERE slug IN ($placeholders)",
+            ...$seed_category_slugs
+        )
+    );
+
+    if (empty($seed_categories)) {
+        return array(
+            'success' => true,
+            'message' => __('No seed products found to delete.', 'hid-hov-theme'),
+            'details' => array()
+        );
+    }
+
+    // Delete products for each seed category
+    foreach ($seed_categories as $category) {
+        // Get all products in this category
+        $products = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT id FROM $products_table WHERE category_id = %d",
+                $category->id
+            )
+        );
+
+        if (!empty($products)) {
+            $product_ids = array_column($products, 'id');
+            $id_placeholders = implode(',', array_fill(0, count($product_ids), '%d'));
+
+            // Delete product images
+            $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM $images_table WHERE product_id IN ($id_placeholders)",
+                    ...$product_ids
+                )
+            );
+
+            // Delete product variants
+            $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM $variants_table WHERE product_id IN ($id_placeholders)",
+                    ...$product_ids
+                )
+            );
+
+            // Delete products
+            $deleted = $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM $products_table WHERE category_id = %d",
+                    $category->id
+                )
+            );
+
+            if ($deleted) {
+                $total_products_deleted += $deleted;
+                $details[] = "Deleted $deleted products from category: {$category->name}";
+            }
+        }
+
+        // Delete the category
+        $deleted = $wpdb->delete(
+            $categories_table,
+            array('id' => $category->id),
+            array('%d')
+        );
+
+        if ($deleted) {
+            $total_categories_deleted++;
+            $details[] = "Deleted category: {$category->name}";
+        }
+    }
+
+    return array(
+        'success' => true,
+        'message' => sprintf(
+            __('Successfully deleted %d products and %d categories!', 'hid-hov-theme'),
+            $total_products_deleted,
+            $total_categories_deleted
+        ),
+        'details' => $details
+    );
+}

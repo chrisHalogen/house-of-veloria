@@ -1,0 +1,21 @@
+/*
+Theme Name: HID HOV Theme
+Theme URI: https://hoveloria.com
+Author: Halogenius Ideas
+Author URI: https://christianchi.netlify.app/
+Description: A beautiful, feature-rich WordPress e-commerce theme with product variants, multiple payment gateways, and premium UI design. Features curated elegance for luxury jewelry e-commerce with session-based cart, product variants, multiple payment gateways (Paystack, Stripe, PayPal, Bank Transfer), inventory management, and beautiful responsive design.
+Version: 1.1.4
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: hid-hov-theme
+Tags: e-commerce, custom-menu, custom-logo, featured-images, theme-options, translation-ready, full-width-template
+
+HID HOV Theme - Curated Elegance for the Discerning
+A complete e-commerce solution with premium design aesthetics.
+*/
+
+/* Theme styles are loaded separately via functions.php */
+
